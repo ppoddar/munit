@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <!-- The identifier that must be unique within the hosting gallery -->
+    <id>munit</id>
+
+    <!-- The package version number that is used when resolving dependencies -->
+   <version>1.0.0</version>
+
+    <!-- Authors contain text that appears directly on the gallery -->
+    <authors>Pinaki Poddar</authors>
+
+    <!-- Owners are typically nuget.org identities that allow gallery
+         users to earily find other packages by the same owners.  -->
+    <owners>ppoddar</owners>
+
+
+    <!-- License and project URLs provide links for the gallery -->
+    <licenseUrl>http://github.com/ppoddar</licenseUrl>
+    <projectUrl>http://github.com/ppoddar</projectUrl>
+
+    <!-- The icon is used in Visual Studio's package manager UI -->
+    <iconUrl>http://github.com/ppoddar</iconUrl>
+
+    <language>English</language>
+
+    <!-- If true, this value prompts the user to accept the license when
+         installing the package. -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+    <!-- Any details about this particular release -->
+    <releaseNotes>test framework</releaseNotes>
+
+    <title>unit test framework</title>
+    <summary>unit test framework</summary>
+    <!-- The description can be used in package manager UI. Note that the
+         nuget.org gallery uses information you add in the portal. -->
+    <description>unit test freamework</description>
+
+    <!-- Copyright information -->
+    <copyright>Copyright ©2020 Pinaki Poddar</copyright>
+
+    <!-- Tags appear in the gallery and can be used for tag searches -->
+    <tags>test framework</tags>
+
+    <!-- Dependencies are automatically installed when the package is installed -->
+    <dependencies>
+    </dependencies>
+  </metadata>
+
+  <!-- A readme.txt will be displayed when the package is installed -->
+  <files>
+    <file src="README.md" target="README.md" />
+  </files>
+</package>

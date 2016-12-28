@@ -1,0 +1,99 @@
+<project xmlns:dn="antlib:org.apache.ant.dotnet"
+  name="munit"
+  default="build">
+
+<!-- 
+     NAnt script to build munit and documentation
+-->	
+	<include buildfile="./build.properties" failonerror="true"/>
+
+	<property name="project.home" 
+		      value="${string::replace(project::get-base-directory(), '\','/')}" dynamic="true"/>
+
+
+	<property name="project.driver.home"     value="${project.home}/driver"/>
+	<property name="project.doc.home"        value="${project.home}/doc"/>
+
+    <property name="doc.archive"      value="${project.name}.doc.zip"/>
+    <property name="doc.output.dir"   value="${project.doc.home}/target/doc/api"/>
+
+
+
+	<target name="check-environment">
+
+		<fail message="***WARN: mono runtime not found in ${mono}" 
+				if="${not file::exists(mono)}"/> 
+
+		<fail message="***WARN: build tool not found in ${msbuild}" 
+				if="${not file::exists(msbuild)}"/> 
+
+		<echo message="***WARN: nuget package manager not found in ${nuget}" 
+				if="${not file::exists(nuget)}"/> 
+
+		<echo message="***WARN: document builder not found in ${doxygen}" 
+				if="${not file::exists(doxygen)}"/> 
+
+
+		<echo message="mono executable=${mono}"/>
+		<echo message="build executable=${msbuild}"/>
+
+	</target>
+
+	
+
+	<target name="compile" depends="check-environment" description="compiles driver">
+		<exec program="${msbuild}">
+			<arg value="${project.home}/munit.csproj"/>
+		</exec>
+
+	</target>
+
+	<target name="install-packages">
+		<exec program="${nuget}">
+			<arg value="install"/>
+			<arg value="Newtonsoft.Json"/>
+		</exec>
+	</target>
+
+	<target name="package">
+		<exec program="${nuget}">
+			<arg value="pack"/>
+			<arg value="${project.name}.nuspec"/>
+		</exec>	
+	</target>
+
+	<target name="generate-doc" description="generates documents with Doxygen">
+            <mkdir dir="${doc.output.dir}"/>
+            <exec program="${doxygen}"
+                workingdir="${project.doc.home}"
+                failonerror="true">
+            </exec>
+       </target>
+
+       <target name="upload-doc" description="uploads document to upload site"
+               depends="generate-doc">
+             <echo message="creating ${doc.archive} from ${doc.output.dir}"/>
+             
+              <zip zipfile="${doc.archive}">
+                   <fileset basedir="${doc.output.dir}">
+                      <include name="**/*"/>
+                  </fileset>
+              </zip>
+                <property name="doc.upload.site.user" value="pipoddar"/>
+		<property name="scp.destination" value="${doc.upload.site.user}@${doc.upload.site}:/${doc.upload.site.dir}"/>
+		<echo message="uploading ${doc.archive} to ${scp.destination}"/>
+		<exec program="scp">
+                 <arg value="${doc.archive}"/>
+                 <arg value="${scp.destination}"/>
+              </exec>
+       </target>
+
+	   <target name="build">
+	     <echo message="project ${project.name} at ${project.home}"/>
+	     <echo message="doc tool at ${doc.tool.exe}"/>
+	   </target>
+
+	   <target name="clean">
+	   	<delete dir="${project.driver.home}/bin"/>
+	   </target>
+</project>
