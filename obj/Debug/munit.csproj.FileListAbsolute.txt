@@ -1,5 +1,0 @@
-/Users/ppoddar/workspace/munit/bin/Debug/munit.exe
-/Users/ppoddar/workspace/munit/bin/Debug/munit.exe.mdb
-/Users/ppoddar/workspace/munit/obj/Debug/munit.csprojResolveAssemblyReference.cache
-/Users/ppoddar/workspace/munit/obj/Debug/munit.exe
-/Users/ppoddar/workspace/munit/obj/Debug/munit.exe.mdb
